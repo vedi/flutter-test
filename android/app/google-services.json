@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "168873166159",
+    "firebase_url": "https://motivator-272208.firebaseio.com",
+    "project_id": "motivator-272208",
+    "storage_bucket": "motivator-272208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168873166159:android:9c1857eaf5e10d59de713a",
+        "android_client_info": {
+          "package_name": "com.vedidev.motivator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168873166159-25ncib9okbtsg9mktqv5o501o881p7cf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVxfE7negPUX-jM6fT0VEf1lodPfjQ14w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168873166159-25ncib9okbtsg9mktqv5o501o881p7cf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

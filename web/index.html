@@ -9,6 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="motivator">
+  <meta name="google-signin-client_id" content="168873166159-25ncib9okbtsg9mktqv5o501o881p7cf.apps.googleusercontent.com" />
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
@@ -27,6 +28,30 @@
         navigator.serviceWorker.register('flutter_service_worker.js');
       });
     }
+  </script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDHEulZQ3gBKO7wOsKDcYIepg7fpHKz9Dk",
+      authDomain: "motivator-272208.firebaseapp.com",
+      databaseURL: "https://motivator-272208.firebaseio.com",
+      projectId: "motivator-272208",
+      storageBucket: "motivator-272208.appspot.com",
+      messagingSenderId: "168873166159",
+      appId: "1:168873166159:web:bf80905ccf15c105de713a",
+      measurementId: "G-YY82LDHQ97",
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>

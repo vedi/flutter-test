@@ -1,4 +1,4 @@
-package com.example.motivator
+package com.vedidev.motivator
 
 import io.flutter.embedding.android.FlutterActivity
 

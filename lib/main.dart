@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:motivator/teamsPage.dart';
+import 'package:motivator/teams_page.dart';
 
-import 'homePage.dart';
+import 'home_page.dart';
+import 'login_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,10 +28,13 @@ class MyApp extends StatelessWidget {
       ),
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) {
-          return HomePage(title: 'Home Page');
+          return HomePage();
+        },
+        '/login': (BuildContext context) {
+          return LoginPage();
         },
         '/teams': (BuildContext context) {
-          return TeamPage(title: 'Teams Page',);
+          return TeamPage();
         },
       },
     );
