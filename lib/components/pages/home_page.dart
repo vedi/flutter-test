@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:motivator/components/templates/app_page_template.dart';
 
-import 'app_drawer.dart';
+import '../organisms/app_drawer.dart';
 
 const TITLE = 'Home Page';
 
@@ -22,25 +23,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(TITLE),
+    return AppPageTemplate(
+      title: TITLE,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'You have pushed the button this many times:',
+          ),
+          Text(
+            '$_counter',
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

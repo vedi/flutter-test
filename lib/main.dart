@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:motivator/teams_page.dart';
+import 'package:motivator/store/reducers/app_state_reducer.dart';
+import 'package:redux/redux.dart';
 
-import 'home_page.dart';
-import 'login_page.dart';
+import 'components/app.dart';
+import 'data_provider.dart';
+import 'store/middleware.dart';
+import 'models/app_state.dart';
 
 void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) {
-          return HomePage();
-        },
-        '/login': (BuildContext context) {
-          return LoginPage();
-        },
-        '/teams': (BuildContext context) {
-          return TeamPage();
-        },
-      },
-    );
-  }
+  runApp(App(
+    store: Store<AppState>(
+      appReducer,
+      initialState: AppState.loading(),
+      middleware: createMiddleware(ApiDataProvider()),
+    ),
+  ));
 }

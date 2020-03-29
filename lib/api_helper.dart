@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'models/user.dart';
+
 class ApiHelper {
   static ApiHelper _instance;
 
@@ -20,7 +22,7 @@ class ApiHelper {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> loginWithGoogle() async {
+  Future<User> loginWithGoogle() async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -30,9 +32,9 @@ class ApiHelper {
         idToken: googleAuth.idToken,
       );
 
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-      print("signed in " + user.displayName);
-      return user;
+      final FirebaseUser firebaseUser = (await _auth.signInWithCredential(credential)).user;
+      print("signed in " + firebaseUser.displayName);
+      return User.fromFirebaseUser(firebaseUser);;
     } catch (error) {
       print(error);
       throw error;

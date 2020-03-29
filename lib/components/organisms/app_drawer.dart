@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppDrawer extends StatelessWidget {
+  final String userName;
+  final Function() onLogout;
+
   const AppDrawer({
     Key key,
+    @required this.userName,
+    @required this.onLogout,
   }) : super(key: key);
 
   @override
@@ -20,7 +25,7 @@ class AppDrawer extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
-                  'User',
+                  userName ?? '<unknown user>',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ],
@@ -32,22 +37,33 @@ class AppDrawer extends StatelessWidget {
           ),
           _buildRouteListTile(context, 'Home', '/'),
           _buildRouteListTile(context, 'Teams', '/teams'),
-          _buildRouteListTile(context, 'Login', '/login'),
+          if (userName == null) _buildRouteListTile(context, 'Login', '/login'),
+          if (userName != null) _buildListTile(context, 'Logout', onLogout),
         ],
       ),
     );
   }
 
   ListTile _buildRouteListTile(BuildContext context, String title, String route) {
+    return _buildListTile(context, title, () {
+      Navigator.popAndPushNamed(
+          context,
+          route,
+      );
+    });
+  }
+
+  ListTile _buildListTile(BuildContext context, String title, Function() onTap) {
     return ListTile(
-          title: Text(title),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(
-                context,
-                route,
-            );
-          },
-        );
+      title: Text(title),
+      onTap: () {
+        onTap();
+        _hideDrawer(context);
+      },
+    );
+  }
+
+  _hideDrawer(BuildContext context) {
+    Scaffold.of(context).openEndDrawer();
   }
 }
