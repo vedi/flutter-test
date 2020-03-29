@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:motivator/routes.dart';
 
 class AppDrawer extends StatelessWidget {
   final String userName;
   final Function() onLogout;
+  final Function(String route) onNavigate;
 
   const AppDrawer({
     Key key,
     @required this.userName,
     @required this.onLogout,
+    @required this.onNavigate,
   }) : super(key: key);
 
   @override
@@ -35,9 +38,9 @@ class AppDrawer extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          _buildRouteListTile(context, 'Home', '/'),
-          _buildRouteListTile(context, 'Teams', '/teams'),
-          if (userName == null) _buildRouteListTile(context, 'Login', '/login'),
+          _buildRouteListTile(context, 'Home', Routes.home),
+          _buildRouteListTile(context, 'Teams', Routes.teams),
+          if (userName == null) _buildRouteListTile(context, 'Login', Routes.login),
           if (userName != null) _buildListTile(context, 'Logout', onLogout),
         ],
       ),
@@ -46,10 +49,7 @@ class AppDrawer extends StatelessWidget {
 
   ListTile _buildRouteListTile(BuildContext context, String title, String route) {
     return _buildListTile(context, title, () {
-      Navigator.popAndPushNamed(
-          context,
-          route,
-      );
+      onNavigate(route);
     });
   }
 

@@ -1,5 +1,5 @@
 class Routes {
-  static final home = '/';
-  static final login = '/login';
-  static final teams = '/teams';
+  static const home = '/';
+  static const login = '/login';
+  static const teams = '/teams';
 }

@@ -16,6 +16,7 @@ class AppDrawerContainer extends StatelessWidget {
         return AppDrawer(
           userName: vm.userName,
           onLogout: vm.onLogout,
+          onNavigate: vm.onNavigate,
         );
       },
     );
@@ -25,16 +26,19 @@ class AppDrawerContainer extends StatelessWidget {
 class _ViewModel {
   final String userName;
   final Function() onLogout;
+  final Function(String router) onNavigate;
 
   _ViewModel({
     @required this.userName,
     @required this.onLogout,
+    @required this.onNavigate,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       userName: getUser(store.state)?.name,
       onLogout: () => store.dispatch(LogoutAction()),
+      onNavigate: (String route) => store.dispatch(NavigatePushAction(route)),
     );
   }
 

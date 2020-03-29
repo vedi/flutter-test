@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:motivator/components/pages/teams_page.dart';
 import 'package:motivator/containers/login_page_container.dart';
+import 'package:motivator/router/route_observer.dart';
 import 'package:motivator/routes.dart';
-import 'package:motivator/store/selectors.dart';
 import 'package:redux/redux.dart';
 
 import '../models/app_state.dart';
+import '../router/main_route.dart';
 import 'pages/home_page.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   final Store<AppState> store;
@@ -19,6 +22,8 @@ class App extends StatelessWidget {
     return StoreProvider(
       store: store,
       child: MaterialApp(
+        navigatorKey: navigatorKey,
+        navigatorObservers: [routeObserver],
         title: 'Motivator',
         theme: ThemeData(
           // This is the theme of your application.
@@ -32,19 +37,28 @@ class App extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        routes: <String, WidgetBuilder>{
-          Routes.home: (context) {
-            return HomePage();
-          },
-          Routes.login: (context) {
-            return LoginPageContainer();
-          },
-          Routes.teams: (context) {
-            return TeamPage();
-          },
-        },
-        initialRoute: isAuthenticated(store.state) ? Routes.home : Routes.login,
+        initialRoute: store.state.route[0],
+        onGenerateRoute: _getRoute,
       ),
     );
+  }
+
+  MaterialPageRoute _getRoute(RouteSettings settings) {
+    Widget widget;
+    switch (settings.name) {
+      case Routes.home:
+        widget = HomePage();
+        break;
+      case Routes.login:
+        widget = LoginPageContainer();
+        break;
+      case Routes.teams:
+        widget = TeamPage();
+        break;
+      default:
+        widget = HomePage();
+    }
+
+    return MainRoute(widget, settings: settings);
   }
 }
