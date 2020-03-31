@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motivator/blocs/blocs.dart';
 import 'package:motivator/routes.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -14,36 +16,59 @@ class AppDrawer extends StatelessWidget {
     @required this.onNavigate,
   }) : super(key: key);
 
+  static withBloc({
+    @required Function(String route) onNavigate,
+  }) {
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (context, state) {
+        String userName = state is AuthenticationSignInSuccess ? state.displayName : null;
+        return AppDrawer(
+            userName: userName,
+            onLogout: () {
+              BlocProvider.of<AuthenticationBloc>(context).add(
+                LoggedOut(),
+              );
+            },
+            onNavigate: onNavigate
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  'Motivator',
-                  style: Theme.of(context).textTheme.headline5,
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (context, state) {
+        return Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Motivator',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    Text(
+                      userName ?? '<unknown user>',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
-                Text(
-                  userName ?? '<unknown user>',
-                  style: Theme.of(context).textTheme.headline6,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
                 ),
-              ],
-              crossAxisAlignment: CrossAxisAlignment.start,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
+              ),
+              _buildRouteListTile(context, 'Home', Routes.home),
+              _buildRouteListTile(context, 'Teams', Routes.teams),
+              if (userName == null) _buildRouteListTile(context, 'Login', Routes.login),
+              if (userName != null) _buildListTile(context, 'Logout', onLogout),
+            ],
           ),
-          _buildRouteListTile(context, 'Home', Routes.home),
-          _buildRouteListTile(context, 'Teams', Routes.teams),
-          if (userName == null) _buildRouteListTile(context, 'Login', Routes.login),
-          if (userName != null) _buildListTile(context, 'Logout', onLogout),
-        ],
-      ),
+        );
+      },
     );
   }
 
