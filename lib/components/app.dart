@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:motivator/components/pages/teams_page.dart';
 import 'package:motivator/containers/login_page_container.dart';
+import 'package:motivator/containers/teams_page_container.dart';
 import 'package:motivator/router/route_observer.dart';
 import 'package:motivator/routes.dart';
 import 'package:redux/redux.dart';
@@ -53,7 +53,7 @@ class App extends StatelessWidget {
         widget = LoginPageContainer();
         break;
       case Routes.teams:
-        widget = TeamPage();
+        widget = TeamsPageContainer();
         break;
       default:
         widget = HomePage();

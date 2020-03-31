@@ -1,6 +1,8 @@
 
 
 
+import 'package:motivator/models/team.dart';
+
 class TodosNotLoadedAction {}
 
 class NavigateReplaceAction {
@@ -32,9 +34,27 @@ class NavigatePopAction {
   }
 }
 
-class LogoutAction {
+class RequestTeamsDEAction {
   @override
   String toString() {
-    return 'LogoutAction{}';
+    return 'RequestTeams{}';
+  }
+}
+
+class CancelTeamsDEAction {
+  @override
+  String toString() {
+    return 'CancelTeamsDEAction{}';
+  }
+}
+
+class TeamsDEAction {
+  final List<Team> teams;
+
+  TeamsDEAction(this.teams);
+
+  @override
+  String toString() {
+    return 'TeamsDEAction{teams: $teams}';
   }
 }

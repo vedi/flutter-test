@@ -1,11 +1,28 @@
 import 'package:motivator/components/app.dart';
 import 'package:motivator/models/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 import '../data_provider.dart';
 import 'actions/actions.dart';
 import 'actions/thunk_actions.dart';
+import 'epics.dart';
+
+List<Middleware<AppState>> createMiddleware(
+    DataProvider dataProvider,
+    ) {
+  return [
+    ..._createNavigationMiddleware(),
+    _appThunkActionMiddleware,
+    (Store<AppState> store, action, NextDispatcher next) {
+      print(action);
+      next(action);
+    },
+    _createEpicMiddleware(),
+    thunkMiddleware,
+  ];
+}
 
 void _appThunkActionMiddleware<AppState>(
   Store<AppState> store,
@@ -43,12 +60,7 @@ _navigate(Store<AppState> store, action, NextDispatcher next) {
   next(action);
 }
 
-List<Middleware<AppState>> createMiddleware(
-  DataProvider dataProvider,
-) {
-  return [
-    ..._createNavigationMiddleware(),
-    _appThunkActionMiddleware,
-    thunkMiddleware,
-  ];
+EpicMiddleware<AppState> _createEpicMiddleware() {
+  final allEpics = combineEpics<AppState>([teamsEpic]);
+  return EpicMiddleware<AppState>(allEpics);
 }

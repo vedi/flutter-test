@@ -1,23 +1,24 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:motivator/components/organisms/app_drawer.dart';
+import 'package:motivator/components/pages/login_page.dart';
+import 'package:motivator/components/pages/teams_page.dart';
 import 'package:motivator/models/app_state.dart';
+import 'package:motivator/models/team.dart';
 import 'package:motivator/store/actions/actions.dart';
 import 'package:motivator/store/actions/thunk_actions.dart';
-import 'package:motivator/store/selectors.dart';
 import 'package:redux/redux.dart';
 
-class AppDrawerContainer extends StatelessWidget {
+class TeamsPageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       converter: _ViewModel.fromStore,
+      onInit: (store) => store.dispatch(new RequestTeamsDEAction()),
+      onDispose: (store) => store.dispatch(new CancelTeamsDEAction()),
       builder: (context, vm) {
-        return AppDrawer(
-          userName: vm.userName,
-          onLogout: vm.onLogout,
-          onNavigate: vm.onNavigate,
+        return TeamsPage(
+          teams: vm.teams,
         );
       },
     );
@@ -25,21 +26,15 @@ class AppDrawerContainer extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String userName;
-  final Function() onLogout;
-  final Function(String router) onNavigate;
+  final List<Team> teams;
 
   _ViewModel({
-    @required this.userName,
-    @required this.onLogout,
-    @required this.onNavigate,
+    @required this.teams,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      userName: getUser(store.state)?.name,
-      onLogout: () => store.dispatch(LogoutAction()),
-      onNavigate: (String route) => store.dispatch(NavigatePushAction(route)),
+      teams: store.state.teams,
     );
   }
 
@@ -48,8 +43,8 @@ class _ViewModel {
       identical(this, other) ||
           other is _ViewModel &&
               runtimeType == other.runtimeType &&
-              userName == other.userName;
+              teams == other.teams;
 
   @override
-  int get hashCode => userName.hashCode;
+  int get hashCode => teams.hashCode;
 }

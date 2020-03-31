@@ -13,15 +13,21 @@ class ApiHelper {
     return _instance;
   }
 
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Stream<FirebaseUser> _onAuthStateChanged;
+
   ApiHelper() {
     if (_instance != null) {
       throw new StateError('Already created');
     }
   }
-
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
+// TODO
+//  set onAuthStateChanged(Stream<FirebaseUser> value) {
+//    _auth.onAuthStateChanged = value;
+//  }
+//
   Future<User> loginWithGoogle() async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -39,5 +45,9 @@ class ApiHelper {
       print(error);
       throw error;
     }
+  }
+
+  Future<void> logout() {
+    return _auth.signOut();
   }
 }
