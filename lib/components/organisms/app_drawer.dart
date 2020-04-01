@@ -16,20 +16,20 @@ class AppDrawer extends StatelessWidget {
     @required this.onNavigate,
   }) : super(key: key);
 
-  static withBloc({
-    @required Function(String route) onNavigate,
-  }) {
+  static withBloc() {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         String userName = state is AuthenticationSignInSuccess ? state.displayName : null;
         return AppDrawer(
-            userName: userName,
-            onLogout: () {
-              BlocProvider.of<AuthenticationBloc>(context).add(
-                LoggedOut(),
-              );
-            },
-            onNavigate: onNavigate
+          userName: userName,
+          onLogout: () {
+            BlocProvider.of<AuthenticationBloc>(context).add(
+              LoggedOut(),
+            );
+          },
+          onNavigate: (String route) {
+            BlocProvider.of<RouteBloc>(context).add(RoutePushed(route));
+          },
         );
       },
     );

@@ -13,7 +13,7 @@ class AppDrawerContainer extends StatelessWidget {
       converter: _ViewModel.fromStore,
       builder: (context, vm) {
         return AppDrawer.withBloc(
-          onNavigate: vm.onNavigate,
+//          onNavigate: vm.onNavigate,
         );
       },
     );

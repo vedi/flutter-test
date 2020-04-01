@@ -26,6 +26,9 @@ void main() {
                 AuthenticationBloc(context)
                   ..add(AppStarted()),
               ),
+              BlocProvider<RouteBloc>(
+                create: (context) => RouteBloc(),
+              ),
               BlocProvider<LoginBloc>(
                 create: (context) => LoginBloc(context),
               ),

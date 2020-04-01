@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivator/blocs/blocs.dart';
 
+import '../../routes.dart';
+
 class LoginForm extends StatefulWidget {
   State<LoginForm> createState() => _LoginFormState();
 }
@@ -62,6 +64,7 @@ class _LoginFormState extends State<LoginForm> {
         }
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+          BlocProvider.of<RouteBloc>(context).add(RouteReplaced(Routes.home));
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -73,8 +76,6 @@ class _LoginFormState extends State<LoginForm> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
-                    // TODO: Add assets
-                    child: Image.asset('assets/flutter_logo.png', height: 200),
                   ),
                   TextFormField(
                     controller: _emailController,
