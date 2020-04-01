@@ -167,13 +167,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.0"
-  flutter_redux:
-    dependency: "direct main"
-    description:
-      name: flutter_redux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -303,27 +296,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  redux:
-    dependency: "direct main"
-    description:
-      name: redux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.0"
-  redux_epics:
-    dependency: "direct main"
-    description:
-      name: redux_epics
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.13.0"
-  redux_thunk:
-    dependency: "direct main"
-    description:
-      name: redux_thunk
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   rxdart:
     dependency: "direct main"
     description:

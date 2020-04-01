@@ -1,15 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:motivator/models/app_state.dart';
-import 'package:motivator/store/actions/actions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motivator/blocs/route/route.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 class RouteAwareWidget extends StatefulWidget {
   final Widget child;
-
   RouteAwareWidget({this.child});
-
   State<RouteAwareWidget> createState() => RouteAwareWidgetState(child: child);
 }
 
@@ -38,7 +35,7 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   @override
   void didPopNext() {
     // Covering route was popped off the navigator.
-    StoreProvider.of<AppState>(context).dispatch(NavigatePopAction());
+    BlocProvider.of<RouteBloc>(context).add(RoutePopped());
   }
 
   @override

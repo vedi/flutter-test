@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:motivator/components/organisms/app_drawer.dart';
-import 'package:motivator/containers/app_drawer_container.dart';
 
 class AppPageTemplate extends StatelessWidget {
   @required
@@ -27,7 +26,7 @@ class AppPageTemplate extends StatelessWidget {
       body: Center(
         child: body,
       ),
-      drawer: AppDrawerContainer(),
+      drawer: AppDrawer.withBloc(),
       floatingActionButton: floatingActionButton,
     );
   }
