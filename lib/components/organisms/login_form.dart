@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivator/blocs/blocs.dart';
+import 'package:motivator/components/atoms/buttons.dart';
 
 import '../../routes.dart';
 
@@ -108,9 +109,32 @@ class _LoginFormState extends State<LoginForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        _createLoginButton(isLoginButtonEnabled(state)),
-                        _createGoogleLoginButton(context),
-                        _createCreateAccountButton(context),
+                        Buttons.raised(
+                          onPressed: isLoginButtonEnabled(state)
+                              ? _onFormSubmitted
+                              : null,
+                          title: 'Login',
+                        ),
+                        Buttons.raisedIcon(
+                          iconData: FontAwesomeIcons.google,
+                          title: 'Sign in with Google',
+                          onPressed: () {
+                            BlocProvider.of<LoginBloc>(context).add(
+                              LoginWithGooglePressed(),
+                            );
+                          },
+                        ),
+                        Buttons.flat(
+                          title: 'Create an Account',
+                          onPressed: () {
+                            // TODO: Implement
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(builder: (context) {
+                            //     return RegisterScreen(userRepository: _userRepository);
+                            //   }),
+                            // );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -120,48 +144,6 @@ class _LoginFormState extends State<LoginForm> {
           );
         },
       ),
-    );
-  }
-
-  Widget _createLoginButton(bool enable) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-      onPressed: enable ? _onFormSubmitted : null,
-      child: Text('Login'),
-    );
-  }
-
-  Widget _createGoogleLoginButton(BuildContext context) {
-    return RaisedButton.icon(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-      icon: Icon(FontAwesomeIcons.google, color: Colors.white),
-      onPressed: () {
-        BlocProvider.of<LoginBloc>(context).add(
-          LoginWithGooglePressed(),
-        );
-      },
-      label: Text('Sign in with Google', style: TextStyle(color: Colors.white)),
-      color: Colors.redAccent,
-    );
-  }
-
-  Widget _createCreateAccountButton(BuildContext context) {
-    return FlatButton(
-      child: Text(
-        'Create an Account',
-      ),
-      onPressed: () {
-//        TODO: Implement
-//        Navigator.of(context).push(
-//          MaterialPageRoute(builder: (context) {
-//            return RegisterScreen(userRepository: _userRepository);
-//          }),
-//        );
-      },
     );
   }
 

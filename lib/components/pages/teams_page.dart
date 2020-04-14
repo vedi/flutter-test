@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motivator/blocs/teams/teams.dart';
 import 'package:motivator/components/templates/app_page_template.dart';
 import 'package:motivator/models/team.dart';
 
 const TITLE = 'Teams Page';
 
 class TeamsPage extends StatelessWidget {
-  final List<Team> teams;
-
-  const TeamsPage({Key key, @required this.teams}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +21,14 @@ class TeamsPage extends StatelessWidget {
   }
 
   _buildList(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
-      children: teams.map((team) => _buildListItem(context, team)).toList(),
+    return  BlocBuilder<TeamsBloc, TeamsState> (
+      builder: (context, state) {
+        var teams = state is TeamsLoadedSuccess ? state.teams : [];
+        return ListView(
+          padding: const EdgeInsets.only(top: 20.0),
+          children: teams.map((team) => _buildListItem(context, team)).toList(),
+        );
+      },
     );
   }
 

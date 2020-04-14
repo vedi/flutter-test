@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'blocs/authentication/authentication.dart';
 import 'blocs/blocs.dart';
 import 'components/app.dart';
+import 'resources/teams_repository.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,7 @@ void main() {
       MultiProvider(
         providers: [
           Provider<UserRepository>(create: (_) => UserRepository()),
+          Provider<TeamsRepository>(create: (_) => TeamsRepository()),
         ],
         child: MultiBlocProvider(
             providers: [
@@ -24,9 +26,6 @@ void main() {
               ),
               BlocProvider<RouteBloc>(
                 create: (context) => RouteBloc(),
-              ),
-              BlocProvider<LoginBloc>(
-                create: (context) => LoginBloc(context),
               ),
             ],
             child: App(),

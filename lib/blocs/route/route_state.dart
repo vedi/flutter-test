@@ -24,4 +24,11 @@ class RouteState extends Equatable {
 
   @override
   List<Object> get props => [routes];
+
+  @override
+  String toString() {
+    return '''RouteState {
+      routes: $routes,
+    }''';
+  }
 }
