@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motivator/blocs/login/login_form_bloc.dart';
 import 'package:motivator/components/organisms/login_form.dart';
 import 'package:motivator/components/templates/app_page_template.dart';
 
@@ -9,7 +11,10 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppPageTemplate(
       title: TITLE,
-      body: LoginForm(),
+      body: BlocProvider<LoginFormBloc>(
+        create: (context) => LoginFormBloc(context),
+        child: LoginForm(),
+      ),
     );
   }
 }

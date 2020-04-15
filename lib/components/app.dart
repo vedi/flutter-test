@@ -39,10 +39,7 @@ class App extends StatelessWidget {
         widget = HomePage();
         break;
       case Routes.login:
-        widget = BlocProvider<LoginBloc>(
-          create: (context) => LoginBloc(context),
-          child: LoginPage(),
-        );
+        widget = LoginPage();
         break;
       case Routes.teams:
         widget = BlocProvider<TeamsBloc>(
