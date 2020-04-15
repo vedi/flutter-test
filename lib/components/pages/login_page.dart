@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:motivator/blocs/login/login_form_bloc.dart';
+import 'package:motivator/blocs/login_form_bloc/login_form_bloc.dart';
 import 'package:motivator/components/organisms/login_form.dart';
 import 'package:motivator/components/templates/app_page_template.dart';
 

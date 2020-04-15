@@ -4,6 +4,7 @@ import 'package:motivator/resources/user_repository.dart';
 import 'package:provider/provider.dart';
 
 import 'login_form_event.dart';
+export 'login_form_event.dart';
 
 class LoginFormBloc extends FormBloc<String, String> {
   final UserRepository _userRepository;

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivator/blocs/blocs.dart';
-import 'package:motivator/blocs/login/login_form_bloc.dart';
+import 'package:motivator/blocs/login_form_bloc/login_form_bloc.dart';
 import 'package:motivator/components/atoms/buttons.dart';
 
 import '../../routes.dart';
