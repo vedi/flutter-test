@@ -26,6 +26,7 @@ class AppDrawer extends StatelessWidget {
             BlocProvider.of<AuthenticationBloc>(context).add(
               LoggedOut(),
             );
+            BlocProvider.of<RouteBloc>(context).add(RouteReplaced(Routes.home));
           },
           onNavigate: (String route) {
             BlocProvider.of<RouteBloc>(context).add(RoutePushed(route));

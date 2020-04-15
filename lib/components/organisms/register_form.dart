@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivator/blocs/blocs.dart';
-import 'package:motivator/blocs/login_form_bloc/login_form_bloc.dart';
+import 'package:motivator/blocs/register_form_bloc/register_form_bloc.dart';
 import 'package:motivator/components/atoms/buttons.dart';
 
 import '../../routes.dart';
 
-class LoginForm extends StatefulWidget {
-  State<LoginForm> createState() => _LoginFormState();
+class RegisterForm extends StatefulWidget {
+  State<RegisterForm> createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
-  LoginFormBloc _loginFormBloc;
+class _RegisterFormState extends State<RegisterForm> {
+  RegisterFormBloc _registerFormBloc;
 
   @override
   void initState() {
     super.initState();
-    _loginFormBloc = BlocProvider.of<LoginFormBloc>(context);
+    _registerFormBloc = BlocProvider.of<RegisterFormBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FormBlocListener<LoginFormBloc, String, String>(
+    return FormBlocListener<RegisterFormBloc, String, String>(
       onSubmitting: (context, state) {
         Scaffold.of(context)
           ..hideCurrentSnackBar()
@@ -32,7 +31,7 @@ class _LoginFormState extends State<LoginForm> {
               content: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Logging In...'),
+                  Text('Registering...'),
                   CircularProgressIndicator(),
                 ],
               ),
@@ -50,7 +49,10 @@ class _LoginFormState extends State<LoginForm> {
             SnackBar(
               content: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('Login Failure'), Icon(Icons.error)],
+                children: [
+                  Text('Registration Failure: ${state.failureResponse}'),
+                  Icon(Icons.error),
+                ],
               ),
               backgroundColor: Colors.red,
             ),
@@ -65,7 +67,7 @@ class _LoginFormState extends State<LoginForm> {
                 padding: EdgeInsets.symmetric(vertical: 20),
               ),
               TextFieldBlocBuilder(
-                textFieldBloc: _loginFormBloc.email,
+                textFieldBloc: _registerFormBloc.email,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   icon: Icon(Icons.email),
@@ -73,35 +75,24 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               TextFieldBlocBuilder(
-                textFieldBloc: _loginFormBloc.password,
+                textFieldBloc: _registerFormBloc.password,
                 suffixButton: SuffixButton.obscureText,
                 decoration: InputDecoration(
                   icon: Icon(Icons.lock),
                   labelText: 'Password',
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Buttons.raised(
-                      onPressed: _loginFormBloc.submit,
-                      title: 'Login',
-                    ),
-                    Buttons.raisedIcon(
-                      iconData: FontAwesomeIcons.google,
-                      title: 'Sign in with Google',
-                      onPressed: _loginFormBloc.submitWithGoogle,
-                    ),
-                    Buttons.flat(
-                      title: 'Create an Account',
-                      onPressed: () {
-                        BlocProvider.of<RouteBloc>(context).add(RouteReplaced(Routes.register));
-                      },
-                    ),
-                  ],
+              TextFieldBlocBuilder(
+                textFieldBloc: _registerFormBloc.confirmPassword,
+                suffixButton: SuffixButton.obscureText,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.lock_outline),
+                  labelText: 'Confirm Password',
                 ),
+              ),
+              Buttons.raised(
+                onPressed: _registerFormBloc.submit,
+                title: 'Register',
               ),
             ],
           ),

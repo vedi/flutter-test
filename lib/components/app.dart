@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motivator/blocs/authentication/authentication.dart';
 import 'package:motivator/blocs/blocs.dart';
+import 'package:motivator/components/pages/register_page.dart';
 import 'package:motivator/router/route_observer.dart';
 import 'package:motivator/routes.dart';
 
@@ -40,6 +41,9 @@ class App extends StatelessWidget {
         break;
       case Routes.login:
         widget = LoginPage();
+        break;
+      case Routes.register:
+        widget = RegisterPage();
         break;
       case Routes.teams:
         widget = BlocProvider<TeamsBloc>(
