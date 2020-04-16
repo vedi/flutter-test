@@ -31,7 +31,6 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   }
 
   Stream<TeamsState> _mapTeamLoadingStartedToState() async* {
-    print('_subscription: $_subscription');
     _subscription?.cancel();
     _subscription = _teamsRepository.fetch().listen(
           (teams) => add(TeamsLoadingHappened(teams)),

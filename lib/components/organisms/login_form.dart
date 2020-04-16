@@ -92,12 +92,15 @@ class _LoginFormState extends State<LoginForm> {
                     Buttons.raisedIcon(
                       iconData: FontAwesomeIcons.google,
                       title: 'Sign in with Google',
-                      onPressed: _loginFormBloc.submitWithGoogle,
+                      onPressed: () async {
+                        await _loginFormBloc.submitWithGoogle();
+
+                      },
                     ),
                     Buttons.flat(
                       title: 'Create an Account',
                       onPressed: () {
-                        BlocProvider.of<RouteBloc>(context).add(RouteReplaced(Routes.register));
+                        BlocProvider.of<RouteBloc>(context).add(RoutePushed(Routes.register));
                       },
                     ),
                   ],

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepository {
+  final _collection = Firestore.instance.collection('users');
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
@@ -10,30 +12,40 @@ class UserRepository {
         _googleSignIn = googleSignIn ?? GoogleSignIn() {
   }
 
-  Future<FirebaseUser> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
-    await googleUser.authentication;
+        await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
     await _firebaseAuth.signInWithCredential(credential);
-    return _firebaseAuth.currentUser();
+    await _makeSureExists();
   }
 
-  Future<void> signInWithCredentials(String email, String password) {
-    return _firebaseAuth.signInWithEmailAndPassword(
+  Future<void> signInWithCredentials(String email, String password) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    await _makeSureExists();
   }
 
   Future<void> signUp({String email, String password}) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
+    AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    await _makeSureExists();
+    return authResult;
+  }
+
+  _makeSureExists() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    if (currentUser != null) {
+      return _collection.document(currentUser.uid).setData({}, merge: true);
+    }
   }
 
   Future<void> signOut() async {
@@ -49,6 +61,6 @@ class UserRepository {
   }
 
   Future<String> getUser() async {
-    return (await _firebaseAuth.currentUser()).email;
+    return (await _firebaseAuth.currentUser())?.email;
   }
 }

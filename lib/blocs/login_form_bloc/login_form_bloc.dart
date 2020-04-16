@@ -37,8 +37,12 @@ class LoginFormBloc extends FormBloc<String, String> {
   @override
   Stream<FormBlocState<String, String>> mapEventToState(FormBlocEvent event) async* {
     if (event is LoginWithGooglePressed) {
-      print('LoginWithGooglePressed');
-      await _userRepository.signInWithGoogle();
+      try {
+        await _userRepository.signInWithGoogle();
+        emitSuccess();
+      } catch (err) {
+        emitFailure(failureResponse: err.toString());
+      }
     } else {
       yield* super.mapEventToState(event);
     }

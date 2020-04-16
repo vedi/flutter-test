@@ -3,35 +3,41 @@ import 'package:meta/meta.dart';
 
 @immutable
 class User {
-  final String name;
+  final String id;
 
-  User({this.name});
+  User({this.id});
 
   User copyWith({
-    String name,
+    String id,
   }) {
     return User(
-      name: name,
+      id: id,
     );
   }
 
   @override
   int get hashCode =>
-      name.hashCode;
+      id.hashCode;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
           other is User &&
               runtimeType == other.runtimeType &&
-              name == other.name;
+              id == other.id;
 
   @override
   String toString() {
-    return 'User{name: $name}';
+    return 'User{id: $id}';
   }
 
-  factory User.fromFirebaseUser(FirebaseUser firebaseUser) {
-    return User(name: firebaseUser.displayName);
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+    };
+  }
+
+  factory User.fromData(Map<String, dynamic> data) {
+    return User(id: data['id']);
   }
 }
