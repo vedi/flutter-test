@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:motivator/models/user.dart';
 
 class UserRepository {
   final _collection = Firestore.instance.collection('users');
@@ -60,7 +61,8 @@ class UserRepository {
     return currentUser != null;
   }
 
-  Future<String> getUser() async {
-    return (await _firebaseAuth.currentUser())?.email;
+  Future<User> getUser() async {
+    final fbUser = await _firebaseAuth.currentUser();
+    return fbUser != null ? User.fromData(fbUser) : null;
   }
 }

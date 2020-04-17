@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-@immutable
 class Team extends Equatable {
   final String id;
   final String name;
@@ -27,14 +26,6 @@ class Team extends Equatable {
       id: id ?? this.id,
       name: name ?? this.name,
     );
-  }
-
-  @override
-  String toString() {
-    return '''Team {
-      id: $id
-      name: $name
-    }''';
   }
 
   Map<String, Object> toDocument() {

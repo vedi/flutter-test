@@ -7,32 +7,47 @@ import 'package:motivator/models/team.dart';
 const TITLE = 'Teams Page';
 
 class TeamsPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return AppPageTemplate(
       title: TITLE,
-      body: _buildBody(context),
+      body: BlocListener<TeamsBloc, TeamsState>(
+        listener: (context, state) {
+          if (state is TeamsLoadedFailure) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Cannot fetch teams: ${state.errorMessage}'),
+                      Icon(Icons.error),
+                    ],
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+          }
+        },
+        child: _createBody(context),
+      ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
-    return _buildList(context);
-  }
-
-  _buildList(BuildContext context) {
-    return  BlocBuilder<TeamsBloc, TeamsState> (
+  Widget _createBody(BuildContext context) {
+    return BlocBuilder<TeamsBloc, TeamsState> (
       builder: (context, state) {
         var teams = state is TeamsLoadedSuccess ? state.teams : [];
         return ListView(
           padding: const EdgeInsets.only(top: 20.0),
-          children: teams.map((team) => _buildListItem(context, team)).toList(),
+          children: teams.map((team) => _createListItem(context, team)).toList(),
         );
       },
     );
   }
 
-  Widget _buildListItem(BuildContext context, Team team) {
+  Widget _createListItem(BuildContext context, Team team) {
     return Padding(
       key: ValueKey(team.name),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

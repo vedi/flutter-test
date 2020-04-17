@@ -10,6 +10,15 @@ class TeamsLoadingStarted extends TeamsEvent {
   List<Object> get props => [];
 }
 
+class TeamsLoadingFailed extends TeamsEvent {
+  final String errorMessage;
+
+  TeamsLoadingFailed(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
 class TeamsLoadingHappened extends TeamsEvent {
   final List<Team> teams;
 

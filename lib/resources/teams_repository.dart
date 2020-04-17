@@ -13,8 +13,9 @@ class TeamsRepository {
     return _collection.document(team.id).delete();
   }
 
-  Stream<List<Team>> fetch() {
-    return _collection.snapshots().map((querySnapshot) {
+  Stream<List<Team>> fetch(String ownerId) {
+    print('ownerId $ownerId');
+    return _collection.where('ownerId', isEqualTo: ownerId).snapshots().map((querySnapshot) {
       return querySnapshot.documents
         .map((documentSnapshot) => Team.fromSnapshot(documentSnapshot))
         .toList();

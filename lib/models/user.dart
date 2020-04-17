@@ -1,43 +1,36 @@
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meta/meta.dart';
 
-@immutable
-class User {
+class User extends Equatable {
   final String id;
+  final String email;
 
-  User({this.id});
+  User({this.id, this.email});
 
   User copyWith({
     String id,
+    String email,
   }) {
     return User(
       id: id,
+      email: email,
     );
-  }
-
-  @override
-  int get hashCode =>
-      id.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is User &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
-
-  @override
-  String toString() {
-    return 'User{id: $id}';
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'email': email,
     };
   }
 
-  factory User.fromData(Map<String, dynamic> data) {
-    return User(id: data['id']);
+  factory User.fromData(FirebaseUser firebaseUser) {
+    return User(
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+    );
   }
+
+  @override
+  List<Object> get props => [id, email];
 }

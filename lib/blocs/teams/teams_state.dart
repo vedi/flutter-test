@@ -18,3 +18,12 @@ class TeamsLoadedSuccess extends TeamsState {
   @override
   List<Object> get props => [teams];
 }
+
+class TeamsLoadedFailure extends TeamsState {
+  final String errorMessage;
+
+  TeamsLoadedFailure(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}
